@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "name": "SampleApp",
+    "version": "1.0.0",
+    "publisher": "UNIXFOR",
+    "supportUrl": "https://example.com"
+  },
+  "ui": {
+    "logoPath": "Assets\\brand.sample.png",
+    "title": "Universal Installer MVP",
+    "subtitle": "Setup Wizard",
+    "theme": {
+      "mode": "dark",
+      "primaryColor": "#3B82F6",
+      "fontSize": 10
+    },
+    "locale": "en-US",
+    "window": {
+      "width": 900,
+      "height": 600,
+      "topMost": false
+    }
+  },
+  "artifacts": [
+    {
+      "id": "dummyZip",
+      "type": "zip",
+      "source": "files\\service.zip",
+      "sha256": "",
+      "targetDir": "C:\\\\Program Files\\\\MyService"
+    }
+  ],
+  "preChecks": [
+    {
+      "type": "adminRights",
+      "failMessage": "Run as Administrator."
+    },
+    {
+      "type": "osVersion",
+      "min": "10.0.17763"
+    },
+    {
+      "type": "dotnetDesktopRuntime",
+      "min": "8.0.0"
+    },
+    {
+      "type": "diskSpace",
+      "drive": "C:",
+      "minMB": 512
+    }
+  ],
+  "tasks": [
+    {
+      "type": "unzip",
+      "ref": "dummyZip"
+    },
+    {
+      "type": "registrySet",
+      "path": "HKLM\\\\Software\\\\MyApp",
+      "name": "ApiUrl",
+      "value": "https://api.local",
+      "kind": "String"
+    }
+  ],
+  "postTasks": [],
+  "uninstall": {
+    "preTasks": [],
+    "tasks": [
+      {
+        "type": "removeDir",
+        "path": "C:\\\\Program Files\\\\MyService",
+        "recursive": true
+      }
+    ]
+  },
+  "logging": {
+    "level": "Info",
+    "file": "C:\\\\Logs\\\\Installer\\\\install.log",
+    "maxSizeMB": 10,
+    "maxFiles": 5
+  },
+  "telemetry": {
+    "enabled": false,
+    "endpoint": ""
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "name": "SampleApp",
+    "version": "1.0.0",
+    "publisher": "UNIXFOR",
+    "supportUrl": "https://example.com"
+  },
+  "ui": {
+    "logoPath": "Assets\\logo.png",
+    "title": "Universal Installer",
+    "subtitle": "Setup Wizard",
+    "theme": {
+      "mode": "dark",
+      "primaryColor": "#3B82F6",
+      "fontSize": 10
+    },
+    "locale": "en-US",
+    "window": {
+      "width": 900,
+      "height": 600,
+      "topMost": false
+    }
+  },
+  "artifacts": [
+    {
+      "id": "dummyZip",
+      "type": "zip",
+      "source": "files\\service.zip",
+      "sha256": "",
+      "targetDir": "%LOCALAPPDATA%\\UniversalInstallerTest"
+    }
+  ],
+  "preChecks": [
+    {
+      "type": "osVersion",
+      "min": "10.0.17763"
+    }
+  ],
+  "tasks": [
+    {
+      "type": "unzip",
+      "ref": "dummyZip"
+    },
+    {
+      "type": "registrySet",
+      "path": "HKCU\\Software\\UniversalInstallerTest",
+      "name": "SmokeOk",
+      "value": "1",
+      "kind": "String"
+    }
+  ],
+  "postTasks": [],
+  "uninstall": {
+    "preTasks": [],
+    "tasks": [
+      {
+        "type": "removeDir",
+        "path": "%LOCALAPPDATA%\\UniversalInstallerTest",
+        "recursive": true
+      }
+    ]
+  },
+  "logging": {
+    "level": "Info",
+    "file": "%LOCALAPPDATA%\\UniversalInstaller\\logs\\install.log",
+    "maxSizeMB": 10,
+    "maxFiles": 5
+  },
+  "telemetry": {
+    "enabled": false,
+    "endpoint": ""
+  }
+}
